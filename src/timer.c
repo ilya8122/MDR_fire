@@ -135,7 +135,7 @@ BlinkLED(2, 10000000, LED3);
 void check_sensor_1_handler(void)
 {
 check_sensor_1=0;
-BlinkLED(2, 10000000, LED5);
+//BlinkLED(2, 10000000, LED5);
 	fire_chek_module( ADC_CH_ADC0);
 }
 
