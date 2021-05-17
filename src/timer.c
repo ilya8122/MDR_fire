@@ -120,7 +120,7 @@ void event_period_cycle(void)
 			SPI_SS_EXT_FLASH_DESELECT();*/
 /*			printf("=%d, %d, %d\n", (uint16_t)adc_getVal(ADC_CH_TEMP_SENSOR), (uint16_t)adc_getVal(ADC_CH_ADC2), (uint16_t)adc_getVal(ADC_CH_INT_VREF));
 			waitUart1TxComplete();*/
-			getCh0Value();
+			//getCh0Value();
 /*			printf("=%.2f, %.2f, %.2f[V]\n", chGetOut(&ch0), chGetOutLpf(&ch0), ch0.in);
 			waitUart1TxComplete();*/
 }
@@ -128,15 +128,15 @@ void event_period_cycle(void)
 void check_sensor_0_handler(void)
 {
 check_sensor_0=0;
-BlinkLED(2, 10000000, LED3);
-	fire_chek_module( ADC_CH_ADC0);
+//BlinkLED(2, 10000000, LED3);
+	fire_chek_module( ADC_CH_ADC2);
 }
 
 void check_sensor_1_handler(void)
 {
 check_sensor_1=0;
 //BlinkLED(2, 10000000, LED5);
-	fire_chek_module( ADC_CH_ADC0);
+	fire_chek_module( ADC_CH_ADC3);
 }
 
 void check_sensor_2_handler(void)
