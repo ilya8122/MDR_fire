@@ -12,7 +12,7 @@
 #define core_U 3.2
 #define SERIAL_Resistor2 10000
 
-#define dopusk_value 100000 //the interval of changing the resistance value to understand that the sensor is connected
+#define dopusk_value 10000 //the interval of changing the resistance value to understand that the sensor is connected
 
 #define sensor_off 500000 // unactive
 #define top_good 10000 //top resistanse level of good fire sensor

@@ -32,29 +32,30 @@ struct sensor
 		uint8_t sensor_status;
 		float R_PREV;
 		float R;
+		uint8_t first_iteration_flag;
 };
 
    struct sensor sensor_list[]=
 {
-0x00 /*!< Specifies the ADC channel 0.  */,0,0,0,0,
-0x01 /*!< Specifies the ADC channel 1.  */,1,0,0,0,
-0x02 /*!< Specifies the ADC channel 2.  */,0,0,0,0,
-0x03 /*!< Specifies the ADC channel 3.  */,0,0,0,0,
-0x04 /*!< Specifies the ADC channel 4.  */,0,0,0,0,
-0x05 /*!< Specifies the ADC channel 5.  */,0,0,0,0,
-0x06 /*!< Specifies the ADC channel 6.  */,0,0,0,0,
-0x07 /*!< Specifies the ADC channel 7.  */,0,0,0,0,
-0x08 /*!< Specifies the ADC channel 8.  */,0,0,0,0,
-0x09 /*!< Specifies the ADC channel 9.  */,0,0,0,0,
-0x0A /*!< Specifies the ADC channel 10. */,0,0,0,0,
-0x0B /*!< Specifies the ADC channel 11. */,0,0,0,0,
-0x0C /*!< Specifies the ADC channel 12. */,0,0,0,0,
-0x0D /*!< Specifies the ADC channel 13. */,0,0,0,0,
-0x0E /*!< Specifies the ADC channel 14. */,0,0,0,0,
-0x0F /*!< Specifies the ADC channel 15. */,0,0,0,0,
+0x00 /*!< Specifies the ADC channel 0.  */,0,0,0,0,1,
+0x01 /*!< Specifies the ADC channel 1.  */,1,0,0,0,1,
+0x02 /*!< Specifies the ADC channel 2.  */,0,0,0,0,1,
+0x03 /*!< Specifies the ADC channel 3.  */,0,0,0,0,1,
+0x04 /*!< Specifies the ADC channel 4.  */,0,0,0,0,1,
+0x05 /*!< Specifies the ADC channel 5.  */,0,0,0,0,1,
+0x06 /*!< Specifies the ADC channel 6.  */,0,0,0,0,1,
+0x07 /*!< Specifies the ADC channel 7.  */,0,0,0,0,1,
+0x08 /*!< Specifies the ADC channel 8.  */,0,0,0,0,1,
+0x09 /*!< Specifies the ADC channel 9.  */,0,0,0,0,1,
+0x0A /*!< Specifies the ADC channel 10. */,0,0,0,0,1,
+0x0B /*!< Specifies the ADC channel 11. */,0,0,0,0,1,
+0x0C /*!< Specifies the ADC channel 12. */,0,0,0,0,1,
+0x0D /*!< Specifies the ADC channel 13. */,0,0,0,0,1,
+0x0E /*!< Specifies the ADC channel 14. */,0,0,0,0,1,
+0x0F /*!< Specifies the ADC channel 15. */,0,0,0,0,1,
 } ;
 //uint8_t sensor_status = 0;
-uint8_t first_iteration_flag = 1;
+
 uint32_t SENSOR_ADC_CH;//
 
 /**
@@ -67,7 +68,7 @@ void post_reaction_choose(uint8_t sensor_status_loc)
 switch ( sensor_status_loc )
 	{
 case off:
-  printf("\r\n SENSOR UNCONNECT %d , %f",SENSOR_ADC_CH, sensor_list[SENSOR_ADC_CH].R);
+  printf("\r\n SENSOR UNCONNECT!!!!!!!!!!!!!!!!!! %d , %f",SENSOR_ADC_CH, sensor_list[SENSOR_ADC_CH].R);
        
         uint8_t voice[1] = { sensor_fall };
         testAudioStart(voice, 1);
@@ -94,7 +95,7 @@ testAudioStart(voice, 1);
 
 case pozhar:
 	#if (DEBUG_fire == 1)
-        printf("\r\nR=%f POZZZZZZHHHHHHHHHHHAAAAAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRR %d", sensor_list[SENSOR_ADC_CH].R,SENSOR_ADC_CH);
+        printf("\r\nR=%f POZZZZZZHHHHHHHHHHHAAAAAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRR sensor %d", sensor_list[SENSOR_ADC_CH].R,SENSOR_ADC_CH);
 	#endif
 
  uint8_t b[3] = { fire, in_sector, a1 };
@@ -102,7 +103,7 @@ case pozhar:
 	break;
 
 default:
-  
+   printf("\r\nERROR post_reaction_choose!!!!!!!!!!! %d", SENSOR_ADC_CH);
   break;
 }
 }
@@ -148,48 +149,62 @@ uint8_t sensor_diagnostic()
 * @brief  reaction on change resistanse 
 * @retval  R in om
 */
-uint8_t reaction(float R  )
+uint8_t reaction(float   R)
 {
 	
-    if (R - sensor_list[SENSOR_ADC_CH].R_PREV > dopusk_value && (sensor_list[SENSOR_ADC_CH].sensor_status == ok_connect || sensor_list[SENSOR_ADC_CH].sensor_status == fall_connect) && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) 
+    if (sensor_list[SENSOR_ADC_CH].R  - sensor_list[SENSOR_ADC_CH].R_PREV > dopusk_value
+			&& (sensor_list[SENSOR_ADC_CH].sensor_status == ok_connect || sensor_list[SENSOR_ADC_CH].sensor_status == fall_connect)
+			&& sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) 
 		{
         sensor_list[SENSOR_ADC_CH].sensor_status = off;
 				post_reaction_choose(sensor_list[SENSOR_ADC_CH].sensor_status);
         return sensor_list[SENSOR_ADC_CH].sensor_status;
     }
 
-    if (R > top_good && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) {
+    if (sensor_list[SENSOR_ADC_CH].R  > top_good && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) 
+			{
 #if (DEBUG_fire == 1)
-        printf("\r\n SENSOR %d UNACTIVE , %f",SENSOR_ADC_CH, R);
+        printf("\r\n SENSOR %d UNACTIVE , %f",SENSOR_ADC_CH, sensor_list[SENSOR_ADC_CH].R );
+/*				 printf("\r\n SENSOR %d delta , %f",SENSOR_ADC_CH, sensor_list[SENSOR_ADC_CH].R  - sensor_list[SENSOR_ADC_CH].R_PREV );
+				 printf("\r\n SENSOR %d status , %f",SENSOR_ADC_CH, sensor_list[SENSOR_ADC_CH].sensor_status );*/
 #endif
       //  sensor_status = off;
         return sensor_list[SENSOR_ADC_CH].sensor_status;
     }
 
-    if (R < top_good && R > bot_good && sensor_list[SENSOR_ADC_CH].sensor_status == ok_connect && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) {
+    if (sensor_list[SENSOR_ADC_CH].R  < top_good && sensor_list[SENSOR_ADC_CH].R  > bot_good && sensor_list[SENSOR_ADC_CH].sensor_status == ok_connect && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) {
 #if (DEBUG_fire == 1)
-        printf("\r\n SENSOR %d  ACTIVE , %f",SENSOR_ADC_CH, R);
+        printf("\r\n SENSOR %d  ACTIVE , %f",SENSOR_ADC_CH, sensor_list[SENSOR_ADC_CH].R );
 #endif
         return sensor_list[SENSOR_ADC_CH].sensor_status;
     }
 
-    if (sensor_list[SENSOR_ADC_CH].R_PREV - R > dopusk_value && sensor_list[SENSOR_ADC_CH].sensor_status == off && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar&& R>0&& sensor_list[SENSOR_ADC_CH].R_PREV>0) {
+    if (sensor_list[SENSOR_ADC_CH].R_PREV - sensor_list[SENSOR_ADC_CH].R  > dopusk_value && sensor_list[SENSOR_ADC_CH].sensor_status == off && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar&& sensor_list[SENSOR_ADC_CH].R >0&& sensor_list[SENSOR_ADC_CH].R_PREV>0) {
 		sensor_list[SENSOR_ADC_CH].sensor_status=      sensor_diagnostic();
         return sensor_list[SENSOR_ADC_CH].sensor_status;
     }
 
-    if (sensor_list[SENSOR_ADC_CH].sensor_status == ok_connect && R < bot_good) {
+    if (sensor_list[SENSOR_ADC_CH].sensor_status == ok_connect && sensor_list[SENSOR_ADC_CH].R  < bot_good) {
 			
         sensor_list[SENSOR_ADC_CH].sensor_status = pozhar;
 				post_reaction_choose(sensor_list[SENSOR_ADC_CH].sensor_status);
         return sensor_list[SENSOR_ADC_CH].sensor_status;
     }
 
-    if (first_iteration_flag == 1 && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) {
-        first_iteration_flag = 0;
+    if (sensor_list[SENSOR_ADC_CH].first_iteration_flag == 1 && sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) {
+        sensor_list[SENSOR_ADC_CH].first_iteration_flag = 0;
    sensor_list[SENSOR_ADC_CH].sensor_status=     sensor_diagnostic();
         return sensor_list[SENSOR_ADC_CH].sensor_status;
     }
+		
+		  if (sensor_list[SENSOR_ADC_CH].sensor_status != pozhar) 
+		{
+        printf("\r\nR=%f POZAR sensor %d", sensor_list[SENSOR_ADC_CH].R,SENSOR_ADC_CH);
+        return sensor_list[SENSOR_ADC_CH].sensor_status;
+    }
+		printf("\r\nERROR  reaction		%d		!!!!!!!!!!! ", SENSOR_ADC_CH);
+		printf("\r\nsensor %d  	R_PREV=	%f	!!!!!!!!!!! ", SENSOR_ADC_CH,sensor_list[SENSOR_ADC_CH].R);
+		printf("\r\nsensor %d  	R =		%f		!!!!!!!!!!! ", SENSOR_ADC_CH,sensor_list[SENSOR_ADC_CH].R_PREV);
 }
 
 /**

@@ -124,11 +124,15 @@ void event_period_cycle(void)
 /*			printf("=%.2f, %.2f, %.2f[V]\n", chGetOut(&ch0), chGetOutLpf(&ch0), ch0.in);
 			waitUart1TxComplete();*/
 }
-
+	static void Delay(__IO uint32_t nCount)
+{
+  for (; nCount != 0; nCount--);
+}
 void check_sensor_0_handler(void)
 {
 check_sensor_0=0;
 //BlinkLED(2, 10000000, LED3);
+Delay(10000000);
 	fire_chek_module( ADC_CH_ADC2);
 }
 
@@ -136,6 +140,7 @@ void check_sensor_1_handler(void)
 {
 check_sensor_1=0;
 //BlinkLED(2, 10000000, LED5);
+	Delay(10000000);
 	fire_chek_module( ADC_CH_ADC3);
 }
 
