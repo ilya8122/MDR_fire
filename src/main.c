@@ -68,8 +68,8 @@ static const struct Event eventTbl[] = {
 	{&sys_tick_evt,				event_sys_tick_evt},	//sysEvent
 	{&period_cycle,				event_period_cycle},	//sysEvent
 	
-		{&check_sensor_0,				check_sensor_0_handler},
-		{&check_sensor_1,				check_sensor_1_handler},
+//		{&check_sensor_0,				check_sensor_0_handler},
+//		{&check_sensor_1,				check_sensor_1_handler},
 		/*{&check_sensor_2,				check_sensor_2_handler},
 		{&check_sensor_3,				check_sensor_3_handler},
 		{&check_sensor_4,				check_sensor_4_handler},

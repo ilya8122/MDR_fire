@@ -13,6 +13,7 @@
 #include "led.h"
 #include "MDR32F9Qx_adc.h"
 #include "fire_sensor_module.h"
+#include "protocol_module.h"
 
 volatile uint8_t sys_tick_evt = 0;
 volatile uint8_t period_cycle = 0;
@@ -106,6 +107,7 @@ static int ReciveByte=0x00;
 	ReciveByte = getchar();
 	if(ReciveByte >=0){
 //				putchar(ReciveByte);
+			get_byte(ReciveByte);
 			terminal_rx(&uart1RxBuf, ReciveByte);
 	}else{
 		clearerr(stdin);

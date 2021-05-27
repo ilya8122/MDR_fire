@@ -19,6 +19,7 @@
 #include "w25qxx.h"
 #include "uart_app.h"
 #include "dictionary.h"
+#include "protocol_module.h"
 
 // for command "Echo" only
 #include "terminal.h"
@@ -197,6 +198,7 @@ int cmd_status (int argc, char** argv, FILE* to)
 */
 int cmd_help (int argc, char** argv, FILE* to)
 {
+	//print_char( );
 	printHelpCmd(to);
 	return(0);
 }
@@ -211,6 +213,8 @@ int cmd_sleep (int argc, char** argv, FILE* to)
 // Запуск тестовой мелодии
 int cmd_dac (int argc, char** argv, FILE* to)
 {
+	command_interpritation( );
+	
 	unsigned short value; 
 	int ret;
 	if(EXIST_PARAM(0)){
@@ -341,6 +345,7 @@ const cmdHandlers_t cmdList[]=
 	{"DAC", 	CMD_PRIVILEGE_LEVEL_3, cmd_dac, "[0, 1]"},
 	{"W25Q", 	CMD_PRIVILEGE_LEVEL_3, cmd_w25q, "[1=init, 2=readBlock (addr, size), 3=writeBlock(addr, size, val), 4=eraseSect(num)]"},
 	{"HELP", 	CMD_PRIVILEGE_LEVEL_3, cmd_help, ""},
+
 };
 
 const uint8_t cmdListCnt = sizeof(cmdList)/sizeof(cmdList[0]);

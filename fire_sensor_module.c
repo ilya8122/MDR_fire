@@ -98,8 +98,8 @@ case pozhar:
         printf("\r\nR=%f POZZZZZZHHHHHHHHHHHAAAAAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRR sensor %d", sensor_list[SENSOR_ADC_CH].R,SENSOR_ADC_CH);
 	#endif
 
- uint8_t b[3] = { fire, in_sector, a1 };
- testAudioStart(b, 3);
+ uint8_t l[3] = { fire, in_sector, a1 };
+ testAudioStart(l, 3);
 	break;
 
 default:

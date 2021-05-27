@@ -16,6 +16,7 @@
 ".\objects\sensors.o"
 ".\objects\detect.o"
 ".\objects\fire_sensor_module.o"
+".\objects\protocol_module.o"
 ".\objects\w25qxx.o"
 ".\objects\retarget_io.o"
 ".\objects\startup_mdr32f9qx.o"

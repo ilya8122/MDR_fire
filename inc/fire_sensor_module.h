@@ -18,7 +18,7 @@
 #define top_good 10000 //top resistanse level of good fire sensor
 #define bot_good 1000 //bot resistanse level of good fire sensor
 
-#define DEBUG_fire 1
+#define DEBUG_fire 0
 
 #include <stdint.h>
 

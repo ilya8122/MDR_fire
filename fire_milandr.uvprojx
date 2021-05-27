@@ -473,6 +473,11 @@
               <FileType>1</FileType>
               <FilePath>.\fire_sensor_module.c</FilePath>
             </File>
+            <File>
+              <FileName>protocol_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\src\protocol_module.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

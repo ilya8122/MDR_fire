@@ -96,7 +96,7 @@ void UART1_Init(void)
 //  NVIC_EnableIRQ(UART2_IRQn);
 
   /* Initialize UART_InitStructure */
-  UART_InitStructure.UART_BaudRate                = 115000;
+  UART_InitStructure.UART_BaudRate                = 4800;
   UART_InitStructure.UART_WordLength              = UART_WordLength8b;
   UART_InitStructure.UART_StopBits                = UART_StopBits1;
   UART_InitStructure.UART_Parity                  = UART_Parity_No;
